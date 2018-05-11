@@ -1,0 +1,63 @@
+<div class="hidden-xs text-center"><img style="width: 250px; height:250px;" src="<?php echo $this->basepath('/img/sad-face.jpg');?>"/></div>
+<div class="text-center">
+<div><h3><?= $this->message ?></h3></div>
+</div>
+<?php if (! empty($this->display_exceptions)) : ?>
+    <?php if (isset($this->exception)
+        && ($this->exception instanceof \Exception || $this->exception instanceof \Error)) : ?>
+<dl>
+	<dt>Message:</dt>
+    <dd>
+        <pre><?= $this->escapeHtml($this->exception->getMessage()) ?></pre>
+    </dd>
+<?php if( $this->isAdmin==1 || APPLICATION_ENV=='development' ){?>
+	<h4><?= get_class($this->exception) ?></h4>    
+    <dt>File:</dt>
+    <dd>
+        <pre><?= $this->exception->getFile() ?>:<?= $this->exception->getLine() ?></pre>
+    </dd>    
+    <dt>Stack trace:</dt>
+    <dd>
+        <pre><?= $this->escapeHtml($this->exception->getTraceAsString()) ?></pre>
+    </dd>
+<?php }?>    
+</dl>
+<?php if( $this->isAdmin==1 || APPLICATION_ENV=='development' ){?>
+<?php if ($ex = $this->exception->getPrevious()) : ?>
+<hr/>
+<h2>Previous exceptions:</h2>
+<ul class="list-unstyled">
+            <?php $icount = 0 ?>
+            <?php while ($ex) : ?>
+    <li>
+        <h3><?= get_class($ex) ?></h3>
+        <dl>
+            <dt>File:</dt>
+            <dd>
+                <pre><?= $ex->getFile() ?>:<?= $ex->getLine() ?></pre>
+            </dd>
+            <dt>Message:</dt>
+            <dd>
+                <pre><?= $this->escapeHtml($ex->getMessage()) ?></pre>
+            </dd>
+            <dt>Stack trace:</dt>
+            <dd>
+                <pre><?= $this->escapeHtml($ex->getTraceAsString()) ?></pre>
+            </dd>
+        </dl>
+    </li>
+                <?php
+                $ex = $ex->getPrevious();
+                if (++$icount >= 50) {
+                    echo '<li>There may be more exceptions, but we do not have enough memory to process it.</li>';
+                    break;
+                }
+                ?>
+            <?php endwhile ?>
+</ul>
+        <?php endif ?>
+<?php }?>        
+    <?php else : ?>
+        <h3>No Exception available</h3>
+    <?php endif ?>
+<?php endif ?>

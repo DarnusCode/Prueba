@@ -1,0 +1,132 @@
+<?= $this->doctype() ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('LINE')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+        
+	   <!-- Le styles -->
+       <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon-line.ico'])
+                    ->prependStylesheet($this->basePath('css/style.css')); ?>
+        
+        
+        <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		
+		<!-- Use font awesome instead of glyphicons -->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var links = $('.navbar ul li a');
+                $.each(links, function (key, va) {
+                    if (va.href == document.URL) {
+                        $(this).addClass('active');
+                    }
+                });
+            });
+        </script>
+        <script type="text/javascript">
+        	var baseUrl = '<?php echo $this->basePath();?>';
+        </script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        	<!-- Brand -->
+        	<a class="navbar-brand" href="<?= $this->url('home') ?>">
+            	<img src="<?= $this->basePath('img/line-logo.png') ?>"/>&nbsp;
+			</a>
+        	
+        	<!-- Toggler/collapsibe Button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            	<span class="navbar-toggler-icon"></span>
+			</button>
+
+	       <!-- Navbar links -->
+           <div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav mr-auto" style="margin-left: auto;">
+					<li class="nav-item">
+						<a class="nav-link" href="<?php echo $this->url('user'); ?>">Usuarios</a>
+					</li>
+					<li class="nav-item separator"></li>					
+					<li class="nav-item">
+						<a class="nav-link" href="#">Eventos</a>
+					</li>
+					<li class="nav-item separator"></li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Salas</a>
+					</li>
+                </ul>
+                
+                <ul class="navbar-nav">                
+                	<li class="nav-item">
+                		<a class="nav-link" href="<?= $this->url('user') ?>"><span class="fa fa-cog"></span>&nbsp;&nbsp;</a>
+                	</li>                
+                	<li class="nav-item">
+                		<a class="nav-link" href="<?= $this->url('me/profile') ?>"><span class="fa fa-user"></span>&nbsp;&nbsp;<?php echo trim($this->escapeHtml($this->userName));?></a>
+                	</li>
+                    <li class="nav-item">
+                    	<a class="nav-link" href="<?= $this->url('logout') ?>"><span class="fa fa-sign-out"></span>&nbsp;Salir</a>
+                    </li>
+                </ul>                
+           </div>           
+		</nav> 
+		
+        <!-- The actual BODY container-fluid -->
+        <div class="mx-auto">
+            <?= $this->content ?>            
+        </div>
+        
+        <!-- The Footer -->
+        <div class="row footer" style="padding-top:90px;">
+        	<div class="col-md-4">
+        		<div class="text-right">
+        			<strong>Nosotros</strong><br /><span>Laboratorio de Innovaci&oacute;n y Emprendimiento<br />
+        			CUCEA - N&uacute;cleo de Auditorios Perif&eacute;rico Norte<br />
+        			#799, N&uacute;cleo Universitario Los Belenes<br />
+        			C.P. 45100, Zapopan, Jalisco, M&eacute;xico.<br />
+        			Tel. 37703300 Ext. 25916<br /></span>
+					<a href="mailto:line.cucea@gmail.com" target="_blank" style="color:white; text-decoration:none">line.cucea@gmail.com</a>
+        		</div>
+        	</div>
+        	<div class="col-md-4 text-center">
+        		<img alt="CUCEA" height="68" src="<?= $this->basePath('img/CUCEA-FOOTER.png') ?>" width="194" />
+					<p>&nbsp;</p>
+				<img alt="LINE B" height="55" src="<?= $this->basePath('img/LINE-FOOTER.png') ?>" width="176" />
+        	</div>
+        	<div class="col-md-4">
+        		<p>
+        			<a href="https://www.facebook.com/LineCucea/" target="_blank">
+        				<img alt="fb" data-align="left" height="33" src="<?= $this->basePath('img/fb-logo.png') ?>" width="33" />
+        			</a>
+        		</p>
+        		<p style="padding-top: 20px;">
+        			<a href="https://twitter.com/line_cucea" target="_blank">
+        				<img alt="twitter" data-align="left" height="33" src="<?= $this->basePath('img/twitter-logo.png') ?>" width="33" />
+        			</a>
+        		</p>
+        		<p style="padding-top: 20px;">
+        			<a href="mailto:line.cucea@gmail.com" target="_blank">
+        				<img alt="correo" data-entity-type="file" height="33" src="<?= $this->basePath('img/email-logo.png') ?>" width="33" />
+        			</a>
+        		</p>
+        	</div>
+        </div>
+        <?= $this->inlineScript() ?>
+    </body>
+</html>

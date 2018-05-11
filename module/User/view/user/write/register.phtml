@@ -1,0 +1,201 @@
+<style>
+<!--
+.form{
+	background-color: #e88247;
+	padding: 40px;
+	color: #ffffff;
+	text-align: right;	
+	/* Set opacity */
+	filter: alpha(opacity=95);
+	/* IE */
+	-moz-opacity: 0.95;
+	/* Mozilla */
+	opacity: 0.95;
+}
+.form-control{
+	background-color: #d85117;	
+	color: #ffffff;
+	border-color: #c44f0b;	
+}
+#divRegister{
+	background-image: url(<?php echo $this->basePath('img/line-bg.png'); ?>); 
+    background-size:100%;
+    padding-top: 100px; 
+	padding-bottom: 150px;	
+}
+.invalid-feedback{
+	text-align: left;
+}
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+// Jquery section -->
+
+$(document).ready(function(){
+	
+	$("#inputProjectQuestion").change( function(){
+		var result = $(this).val();
+		if( result == "yes" ){
+			$("#rowProjectDescription").show();
+			$("#rowParticipantsNumber").show();
+		} else {
+			$("#rowProjectDescription").hide();
+			$("#rowParticipantsNumber").hide();
+		}
+	});
+	
+});
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+// https://getbootstrap.com/docs/4.0/components/forms/#validation
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+//-->
+</script>
+
+<div class="row" id="divRegister">
+	<div class="col-md-10 mx-auto">
+		<?php if ($this->isError): ?>
+		<div class="form-group row">
+			<div class="col-md-12">
+				<div class="alert alert-danger" role="alert">
+				<?php echo $this->escapeHtml(trim( html_entity_decode($this->errorMessage) ));?>
+            	</div>
+			</div>
+		</div>
+		<?php endif; ?>
+		<form method="post" class="form needs-validation" novalidate>
+		
+			<div class="form-group row">
+				<div class="col-md-2">
+					<label for="inputFirstname">Nombre:</label>
+				</div>
+				<div class="col-md-4">					
+                    <input type="text" class="form-control" name="inputFirstname" id="inputFirstname" maxlength="240" required value="<?php echo $this->escapeHtml( $this->user->getUserName() );?>">
+                    <div class="invalid-feedback">Por favor escribe tu nombre</div>                    
+                </div>
+                <div class="col-md-2">
+					<label for="inputLoginName">Nombre del usuario:</label>
+				</div>
+                <div class="col-md-4">                	
+                    <input type="text" class="form-control" name="inputLoginName" id="inputLoginName" maxlength="120" required value="<?php echo $this->escapeHtml( $this->user->getUser() );?>">
+                    <div class="invalid-feedback">Por favor escribe tu nombre de usuario (sin espacios ni caracteres especiales)</div>
+                </div>
+             </div><!-- ./ row -->
+             
+             <div class="form-group row">
+				<div class="col-md-2">
+					<label for="inputPhoneNumber">Tel&eacute;fono:</label>
+				</div>
+				<div class="col-md-4">					
+                    <input type="phone" class="form-control" name="inputPhoneNumber" id="inputPhoneNumber" maxlength="20" required value="<?php echo $this->escapeHtml( $this->user->getPhone() );?>">
+                    <div class="invalid-feedback">Por favor escribe tu n&uacute;mero de tel&eacute;fono</div>
+                </div>
+                <div class="col-md-2">
+					<label for="inputPassword">Contrase&ntilde;a:</label>
+				</div>
+                <div class="col-md-4">                	
+                    <input type="password" class="form-control" name="inputPassword" id="inputPassword" maxlength="40" required>
+                    <div class="invalid-feedback">Por favor escribe tu contrase&ntilde;a (sin espacios)</div>
+                </div>
+             </div><!-- ./ row -->
+             
+             <div class="form-group row">
+				<div class="col-md-2">
+					<label for="inputEmail">Correo:</label>
+				</div>
+				<div class="col-md-4">					
+                    <input type="email" class="form-control" name="inputEmail" id="inputEmail" maxlength="255" required value="<?php echo $this->escapeHtml( $this->user->getEmail() );?>">
+                    <div class="invalid-feedback">Por favor escribe tu correo</div>
+                </div>
+                <div class="col-md-2">
+					<label for="inputPasswordConfirmation">Confirmaci&oacute;n de Contrase&nacute;a:</label>					
+				</div>
+                <div class="col-md-4">                	
+                    <input type="password" class="form-control" name="inputPasswordConfirmation" id="inputPasswordConfirmation" maxlength="40" required>
+                    <div class="invalid-feedback">Por favor confirma tu contrase&nacute;a</div>
+                </div>
+             </div><!-- ./ row -->
+             
+             <div class="form-group row">
+				<div class="col-md-2">
+					<label for="inputCode">C&oacute;digo:</label>
+				</div>
+				<div class="col-md-4">					
+                    <input type="text" class="form-control" name="inputCode" id="inputCode" maxlength="80" required value="<?php echo $this->escapeHtml( $this->user->getCode() );?>">
+                    <div class="invalid-feedback">Por favor escribe tu c&oacute;digo</div>
+                </div>
+                <div class="col-md-2"></div><!-- Dummy column -->
+                <div class="col-md-4 text-center">
+                	<button type="submit" class="btn btn-warning btn-lg" style="color: #ffffff;">REGISTRARSE</button>
+                </div>
+             </div><!-- ./ row -->
+             
+             <div class="form-group row">
+				<div class="col-md-2">
+					<label for="inputDegree">Carrera:</label>
+				</div>
+				<div class="col-md-4">					
+                    <input type="text" class="form-control" name="inputDegree" id="inputDegree" maxlength="255" required value="<?php echo $this->escapeHtml( $this->user->getDegree() );?>">
+                    <div class="invalid-feedback">Por favor escribe tu carrera</div>
+                </div>
+                <div class="col-md-6">
+                	<input type="hidden" name="inputCSRFToken" value="<?php echo $this->token; ?>" >
+                </div><!-- Dummy column -->                
+             </div><!-- ./ row -->
+             
+             <div class="form-group row">
+				<div class="col-md-2">
+					<label for="inputProjectQuestion">&iquest;Tienes alg&uacute;n proyecto?:</label>
+				</div>
+				<div class="col-md-4">
+					<select class="form-control" name="inputProjectQuestion" id="inputProjectQuestion" required>
+						<option value="yes" <?php echo strtolower($this->user->getHaveProject())==1 ? 'selected="selected"' : '';?>>S&iacute;</option>
+						<option value="no" <?php echo strtolower($this->user->getHaveProject())==0 ? 'selected="selected"' : '';?>>No</option>
+					</select>
+					<div class="invalid-feedback">Por favor selecciona una opci&oacute;n</div>
+                </div>
+                <div class="col-md-6"></div><!-- Dummy column -->
+             </div><!-- ./ row -->
+             
+             <div id="rowProjectDescription" class="form-group row" style="display:none;">
+				<div class="col-md-2">
+					<label for="inputProjectDescription">Descripci&oacute;n del proyecto:</label>
+				</div>
+				<div class="col-md-4">
+                    <textarea class="form-control" name="inputProjectDescription" id="inputProjectDescription" maxlength="2048" rows="4"><?php echo trim($this->escapeHtml( $this->user->getProjectDescription() ) );?></textarea>
+                </div>
+                <div class="col-md-6"></div><!-- Dummy column -->
+             </div><!-- ./ row -->
+             
+             <div id="rowParticipantsNumber" class="form-group row" style="display:none;">
+				<div class="col-md-2">
+					<label for="inputParticipantsNumber">N&uacute;mero de participantes:</label>
+				</div>
+				<div class="col-md-4">					
+                    <input type="number" class="form-control" name="inputParticipantsNumber" id="inputParticipantsNumber" maxlength="10" value="<?php echo $this->escapeHtml( $this->user->getParticipantsNumber() );?>">
+                </div>
+                <div class="col-md-6"></div><!-- Dummy column -->
+             </div><!-- ./ row -->
+		
+		</form>
+	</div><!-- ./ col-md -->
+</div><!-- ./ row divRegister -->
+<div style="clear: both;"></div>

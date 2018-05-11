@@ -1,0 +1,97 @@
+<style>
+<!--
+.form{
+	background-color: #e88247;
+	padding: 20px 40px;
+	color: #ffffff;
+	text-align: right;	
+	/* Set opacity */
+	filter: alpha(opacity=95);
+	/* IE */
+	-moz-opacity: 0.95;
+	/* Mozilla */
+	opacity: 0.95;
+}
+.form-control{
+	background-color: #d85117;	
+	color: #ffffff;
+	border-color: #c44f0b;	
+}
+#divLogin{
+	background-image: url(<?php echo $this->basePath('img/line-bg.png'); ?>); 
+    background-size:100%;
+    padding-top: 200px; 
+	padding-bottom: 200px;	
+}	
+-->
+</style>
+
+<?php
+$this->headTitle('Ingresar');
+$form->get('user')->setAttributes([
+    'style' => 'margin-bottom:20px',
+    'class'=>'form-control', 
+    'placeholder'=>'',
+    'required' => true,
+    ]);
+
+$form->get('password')->setAttributes([
+    'style' => 'margin-bottom:20px',
+    'class'=>'form-control', 
+    'placeholder'=>'',
+    'required' => true,
+    ]);
+?>
+
+<div id="divLogin">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+        	<?php if ($isLoginError): ?>
+            <div class="form-group row">
+				<div class="col-md-12">
+					<div class="alert alert-danger text-left" role="alert">
+                        Usuario o contrase&ntilde;a no v&aacute;lido.
+                    </div>
+				</div>    				                
+             </div><!-- ./ row -->
+            <?php endif; ?>
+            <form class="form" method="post">                
+                <?= $this->formElement($form->get('redirect_url')); ?>
+                <?= $this->formElement($form->get('csrf')) ?>
+                
+                <div class="form-group row text-left">
+                	<div class="col-md-12">                	
+                		<?= $this->formLabel($form->get('user')); ?>
+                		<?= $this->formElement($form->get('user')); ?>
+                	</div>
+				</div><!-- ./ row -->
+                
+                <div class="form-group row text-left">
+                	<div class="col-md-12">
+                		<label for="password">Contrase&ntilde;a</label>
+                		<?= $this->formElement($form->get('password')); ?>
+                	</div>
+				</div><!-- ./ row -->
+				
+				<div class="form-group row">
+                	<div class="col-md-12 text-center">
+                		<button type="submit" class="btn btn-warning btn-lg" style="color: #ffffff;">INICIAR SESI&Oacute;N</button>
+                	</div>
+				</div><!-- ./ row -->
+				
+				<div class="form-group row">
+                	<div class="col-md-12 text-center">
+                		<a href="<?= $this->url('reset-password') ?>">Olvid&eacute; mi contrase&ntilde;a</a>
+                	</div>
+				</div><!-- ./ row -->
+				
+				<div class="form-group row">
+                	<div class="col-md-12 text-center">
+                		<a href="<?= $this->url('registro') ?>">Registrarse</a>
+                	</div>
+				</div><!-- ./ row -->
+                
+            </form>
+        </div>
+    </div>
+</div><!-- /. div login -->    

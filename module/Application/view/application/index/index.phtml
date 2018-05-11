@@ -1,0 +1,174 @@
+<style type="text/css">
+<!--
+div.Servicios{
+    font-family: 'Open Sans', serif;
+    font-size: 49px;
+    color: #7A766E;
+    text-align: center;
+    padding: 100px 0 100px 0;	
+  }
+div.Servicios img{
+	max-width: 200px;
+}
+.blog-card{
+    height: 385px;
+    overflow: hidden;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+.blog-card.Objetivo1 {
+      background: #193C57;
+}
+.blog-card.Objetivo2 {
+      background: #C34C1D;
+}
+.blog-card.Objetivo3 {
+      background: #E7880D;
+}
+.blog-card.Objetivo4 {
+      background: #30D17D;
+}
+.blog-card .color-overlay {
+      /* Rectangle 11: */
+      width: 380px;
+      height: 380px;
+      transition: background 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
+}
+.blog-card:hover .card-info {
+      opacity: 1;
+      bottom: 60px;
+}
+.title-content {
+      text-align: center;
+      margin: 90px 0 0 0;
+      position: absolute;
+      z-index: 20;
+      width: 100%;
+      top: 0;
+      left: 0;
+}
+h3 {
+      font-size: 35px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: white;
+      font-family: 'Taviraj', sans-serif;
+      margin-bottom: 0;
+}
+.card-info {
+      width: 100%;
+      position: absolute;
+      bottom: 100px;
+      left: 0;
+      margin: 0 auto;
+      padding: 0 50px;
+      color: #DCE3E7;
+      font-family: 'Open Sans', serif;
+      font-style: 28px;
+      line-height: 24px;
+      z-index: 20;
+      opacity: 0;
+      transition: bottom 0.3s, opacity 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
+      text-align: center;
+}
+div.InfoLINE{
+      background: #081C2C;
+      font-family: 'Open Sans', serif;
+      font-size: 28px;
+      text-align: center;
+      text-transform: none;
+      color: #FFFFFF;
+      padding: 130px;
+      height:80%;
+      width:100%;
+      overflow:hidden;
+}
+h1{
+      font-size: 53px;
+}
+.carousel-inner img {
+      width: 100%;
+      height: 100%;
+}
+#demo{
+	background-color: #000000;
+}
+-->
+</style>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+	<!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="<?= $this->basePath('img/c1.jpg') ?>" alt="Los Angeles" width="1100" height="500">
+      </div>
+      <div class="carousel-item">
+        <img src="<?= $this->basePath('img/c2.jpg') ?>" alt="Chicago" width="1100" height="500">
+      </div>
+      <div class="carousel-item">
+        <img src="<?= $this->basePath('img/c3.jpg') ?>" alt="New York" width="1100" height="500">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+    
+</div><!-- /. carousel slide -->
+
+<div class="row" style="margin: 0;">
+	<div class="blog-card Objetivo1 col-md-3">
+		<div class="title-content"><h3>Fomentar</h3></div><!-- /.title-content -->
+		<div class="card-info">Es un &aacute;rea común de colaboraci&oacute;n, creada para <strong>fomentar</strong> la <strong>innovaci&oacute;n</strong> y el <strong>empredimiento</strong> empresarial en la comunidad universitaria.</div><!-- /.card-info -->
+        <!-- overlays -->
+  	<div class="color-overlay"></div>
+	</div><!-- /.blog-card -->
+	
+	<div class="blog-card Objetivo2 col-md-3">
+		<div class="title-content"><h3>Articular</h3></div><!-- /.title-content -->
+		<div class="card-info">Permite <strong>articular</strong> los esfuerzos de los alumnos, docentes y &aacute;reas especializadas del Centro Universitario, en <strong>proyectos de alto valor agregado</strong>.</div><!-- /.card-info -->
+		<!-- overlays -->
+		<div class="color-overlay"></div>
+	</div><!-- /.blog-card -->
+	
+	<div class="blog-card Objetivo3 col-md-3">
+		<div class="title-content"><h3>Vincular</h3></div><!-- /.title-content -->
+		<div class="card-info">Gestiona <strong>vinculaci&oacute;n de alto nivel con el ecosistema</strong> de innovaci&oacute;n, creatividad y emprendimiento local, regional y global.</div><!-- /.card-info -->
+		<!-- overlays -->
+		<div class="color-overlay"></div>
+	</div><!-- /.blog-card -->
+	
+	<div class="blog-card Objetivo4 col-md-3">
+		<div class="title-content"><h3>Fomentar</h3></div><!-- /.title-content -->
+		<div class="card-info">Es un &aacute;rea común de colaboraci&oacute;n, creada para <strong>fomentar</strong> la <strong>innovaci&oacute;n</strong> y el <strong>empredimiento</strong> empresarial en la comunidad universitaria.</div><!-- /.card-info -->
+		<!-- overlays -->
+		<div class="color-overlay"></div>
+	</div><!-- /.blog-card -->	
+</div><!-- /. row Objetivos -->
+
+<div class="InfoLINE">
+  <h1>LABORATORIO DE INNOVACI&Oacute;N <br>Y EMPRENDIMIENTO</h1>
+  <br>
+  <p>Los egresados del CUCEA de la Universidad de Guadalajara tienen<br>escasos incentivos y medios para emprender un negocio e <br>involucrarse con la innovaci&oacute;n en los proyectos.</p>
+</div><!-- ./ InfoLINE -->
+  
+<div class="Servicios">
+  <p align="center" style="margin-bottom: 40px;">SERVICIOS</p>
+  <div class="row">
+    <div class="col-md-3"> <img class="img-responsive" src="<?= $this->basePath('img/WIFI.png') ?>"> </div>
+    <div class="col-md-3"> <img class="img-responsive" src="<?= $this->basePath('img/RESERVA.png') ?>"> </div>
+    <div class="col-md-3"> <img class="img-responsive" src="<?= $this->basePath('img/WIFI.png') ?>"> </div>
+    <div class="col-md-3"> <img class="img-responsive" src="<?= $this->basePath('img/RESERVA.png') ?>"> </div>
+  </div>
+</div>

@@ -1,0 +1,245 @@
+<style type="text/css">
+<!--
+/* ======== Add admin form style ============ */
+.input{    
+    border: solid 1px #bdc3c7;;
+    border-radius: 5px;        
+    height: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+}
+/************************* Nice Check boxes styles ****************************/
+.checkOn {
+	cursor: pointer;
+	height: 17px;
+	width: 35px;
+	border-radius: 20px;	
+	background-color: #4f8a10;
+    border: 1px solid #4f8a10;
+    color: #ffffff;
+	filter:alpha(opacity=80);	
+	opacity:0.80;
+	margin-left: auto;
+	margin-right: auto;		
+}
+.checkOff{
+	cursor: pointer;
+	height: 17px;
+	width: 35px;
+	border-radius: 20px;	
+	background-color: #bdc3c7;
+    border: 1px solid #bdc3c7;
+    color: #bdc3c7;
+	filter:alpha(opacity=90);
+	opacity:0.90;
+	margin-left: auto;
+	margin-right: auto;	
+}
+.visible{
+	display: block;
+}
+.invisible{
+	display: none;
+}
+.rgtBullet{	
+	height: 13px;
+	width: 14px;
+	border-radius: 15px;
+	background-color: #ffffff;
+	float: right;
+	margin: 1px 1px 0 0;
+}
+.lftBullet{	
+	height: 13px;
+	width: 14px;
+	border-radius: 15px;
+	background-color: #ffffff;
+	float: left;
+	margin: 1px 0 0 1px;
+}
+/************************* End Check boxes nice styles ****************************/
+-->
+</style>
+<script type="text/javascript">
+<!-- 
+//JAVASCRIPT functions ------------------->
+//Important!. Get baseUrl from layout
+//Set admin
+var setAdminAsync = baseUrl + '/user/setadmin';
+var unsetAdminAsync = baseUrl + '/user/unsetadmin';
+//Set active
+var setActiveAsync = baseUrl + '/user/setactive';
+var unsetActiveAsync = baseUrl + '/user/unsetactive';
+
+function resetPwdModal(){
+	// Get values from the user that has selected
+	var userId = $("#modalUserId").val();
+	var email = $("#modalUserEmail").val();
+	alert(userId + '-' +email);
+	// Get a new password
+	var randomPwd = Math.random().toString(36).slice(-10).toUpperCase();	
+}
+
+// JQUERY functions -------->
+$(document).ready(function(){
+	// Handle AdminOn column event
+	$( "div[id^='divAdminOn_']" ).click( function() {
+		var divId = this.id;
+		var userId = divId.replace('divAdminOn_', '');
+		$("#"+divId).hide();
+		$("#divAdminOff_"+userId).show();
+		// Unset admin via JSON					
+		$.post(unsetAdminAsync, { 'id':userId } );				
+	});
+	// Handles AdminOff column event
+	$( "div[id^='divAdminOff_']" ).click( function() {
+		var divId = this.id;
+		var userId = divId.replace('divAdminOff_', '');
+		$("#"+divId).hide();
+		$("#divAdminOn_"+userId).show();
+		// Set admin via JSON					
+		$.post(setAdminAsync, { 'id':userId } );		
+	});
+	// Handle ActiveOn column event
+	$( "div[id^='divActiveOn_']" ).click( function() {
+		var divId = this.id;
+		var userId = divId.replace('divActiveOn_', '');
+		$("#"+divId).hide();
+		$("#divActiveOff_"+userId).show();
+		// Unset active via JSON					
+		$.post(unsetActiveAsync, { 'id':userId } );
+	});
+	// Handle ActiveOff column event
+	$( "div[id^='divActiveOff_']" ).click( function() {
+		var divId = this.id;
+		var userId = divId.replace('divActiveOff_', '');
+		$("#"+divId).hide();
+		$("#divActiveOn_"+userId).show();
+		// Set active via JSON					
+		$.post(setActiveAsync, { 'id':userId } );
+	});
+	// handles users search button 
+	$("#btnSearchUser").click( function(){
+		textToSearch = $.trim($("#textToSearch").val());		
+		url = baseUrl + '/user?page=1&textToSearch=' + textToSearch;
+		location.href = encodeURI(url);
+	});
+	$("#textToSearch").val('<?php echo $this->textToSearch;?>')
+	// Maintain current search values on page	
+	$('.pagination > li > a').unbind('click');
+	$('.pagination > li > a').click(function(event){				       
+	       event.preventDefault();	       
+	       var url = $(this).attr('href');
+	       if(url == '#') return false;
+	       url += '&textToSearch=' + '<?php echo $this->textToSearch;?>';
+	       //console.log(url) // good for debugging
+	       location.href = baseUrl + encodeURI(url);
+	});
+	// handle password reset confirmation
+	$(".classModalPwdReset").click(
+		function(){
+			var userId = $(this).data('user-id');
+			var email = $(this).data('user-email');
+			$("#modalUserId").val(userId);
+			$("#modalUserEmail").val(email);				
+	});
+});
+
+</script>
+<div class="row" style="margin-top: 50px; margin-bottom: 20px;">
+    <div class="col-md-10 mx-auto">
+    	<form id="formLogSearch">
+            <div class="row">    
+                <div class="col-md-3 col-sm-6 text-right">
+                    <label>Buscar Usuario</label>
+                </div>
+                <div class="col-md-6 col-sm-6 text-left">
+                	<input style="width:100%;" type="text" id="textToSearch" name="textToSearch" class="form-control" placeholder="Escriba el texto a buscar"/>		
+                </div>
+                <div class="col-md-3 col-sm-12">
+                	<button class="btn btn-primary col-md-12 col-sm-12" id="btnSearchUser" type="button"><span class="fa fa-search"></span> Buscar</button>
+                </div>
+            </div><!-- /. Search options -->
+        </form>
+    </div>
+</div><!-- /. row search form -->
+<div class="row" style="margin-bottom: 100px;">
+<div class="col-md-10 mx-auto">
+<table class="table" style="font-size:14px;">
+<tr>
+    <th>Usuario</th>    
+    <th>Nombre</th>
+    <th>Correo</th>
+    <th>&Uacute;ltimo acceso</th>    
+    <th class="text-center">Administrador</th>
+    <th class="text-center">Activo</th>
+    <th class="text-center">Nueva Contrase&ntilde;a</th>
+</tr>
+<?php foreach ($this->paginator as $user) : ?>
+<tr>
+	<td><?php echo $this->escapeHtml($user->getUser()); ?></td>
+	<td><?php echo $this->escapeHtml($user->getUserName()); ?></td>
+	<td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
+	<td><?php echo ($user->getLastLogin() > 0) ? date('Y-m-d- H:i:s', $user->getLastLogin()) : '&nbsp;'; ?></td>        
+<?php if( $this->currentUser == $user->getId() ){?>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>		
+<?php } else { ?>        
+    <td class="text-center">
+    <?php $adminOn = ($user->getIsAdmin()==1) ? 'style="display:block;"' : 'style="display:none;"'; $adminOff = ($user->getIsAdmin()==0) ? 'style="display:block;"' : 'style="display:none;"';?>
+	<div id='divAdminOn_<?php echo intval( $user->getId() );?>' class='checkOn' <?php echo $adminOn;?>>
+		<div class='rgtBullet'></div>
+	</div>
+	<div id='divAdminOff_<?php echo intval( $user->getId() );?>' class='checkOff' <?php echo $adminOff;?>><div class='lftBullet'></div></div>        
+    </td>
+    <td class="text-center">
+    <?php $activeOn = ($user->getActive()==1) ? 'style="display:block;"' : 'style="display:none;"'; $activeOff = ($user->getActive()==0) ? 'style="display:block;"' : 'style="display:none;"';?>
+    <div id='divActiveOn_<?php echo intval( $user->getId() );?>' class='checkOn' <?php echo $activeOn;?>><div class='rgtBullet'></div></div>
+    <div id='divActiveOff_<?php echo intval( $user->getId() );?>' class='checkOff' <?php echo $activeOff;?>><div class='lftBullet'></div></div>
+    </td>
+    <td class="hidden-xs text-center">        
+    	<a href="#" data-target="#myModalPwdReset" data-toggle="modal" class="classModalPwdReset" data-user-id="<?php echo $user->getId();?>" data-user-email="<?php echo $this->escapeHtml( $user->getEmail() );?>">
+			<span class="fa fa-lock"></span>
+		</a>	
+    </td>
+<?php } ?>		
+</tr>
+<?php endforeach; ?>
+</table>
+<?php
+// In module/Album/view/album/album/index.phtml:
+// Add at the end of the file after the table:
+?>
+<?= $this->paginationControl(
+    // The paginator object:
+    $this->paginator,
+    // The scrolling style:
+    'sliding',
+    // The partial to use to render the control:
+    'partial/paginator',
+    // The route to link to when a user clicks a control link:    
+    [ 'route' => 'user' ]
+) ?>
+</div><!-- /. col-md-10 -->
+<!-- Modal to do a password reset -->
+<div class="modal fade" id="myModalPwdReset" tabindex="-1" role="dialog" aria-labelledby="myModalPwdResetLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    	<div class="modal-header">            
+            <h4 class="modal-title" id="myModalPwdResetLabel"><span class="fa fa-lock"></span>&nbsp;&iquest;Desea crear nueva contrase&ntilde;a?</h4>
+          </div>      
+      <div class="modal-body">
+        Por favor confirme que desea enviar una nueva contrase&ntilde;a al usuario.
+        <input type="hidden" id="modalUserId" value="" />
+        <input type="hidden" id="modalUserEmail" value="" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick='resetPwdModal() ;'>&nbsp;&nbsp;S&iacute;&nbsp;&nbsp;</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;No&nbsp;&nbsp;</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /. row users table -->
