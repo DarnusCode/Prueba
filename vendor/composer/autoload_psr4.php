@@ -43,6 +43,7 @@ return array(
     'ZF\\DevelopmentMode\\' => array($vendorDir . '/zfcampus/zf-development-mode/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'User\\' => array($baseDir . '/module/User/src'),
+    'Reservation\\' => array($baseDir . '/module/Reservation/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),

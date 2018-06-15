@@ -1,0 +1,149 @@
+<?php if( $this->room == null) { ?>
+<div class="card">
+	<div class="card-header text-center">
+		<h5>Contenido bloqueado, debe ser llamado desde la p&aacutegina de reservaciones;</h5>
+	</div>
+</div>
+<?php } else { ?>
+<script type="text/javascript">
+<!--
+//JavaScript functions -->
+function validateForm(){
+	// If user set name, email becomes required
+	$("[id^=inputAttendeeName").each( function(){
+		var attendeeName = $(this).attr('id');
+		var attendeeEmail = attendeeName.replace('Name', 'Email');			
+		var emailControl = "#" + attendeeEmail;			
+		if( $(this).val().trim() != "" ){				
+			$(emailControl).attr('required', true);
+			$(emailControl)[0].checkValidity();
+		} else {
+			$(emailControl).attr('required', false);
+		}			
+	});
+	// And vice-versa
+	$("[id^=inputAttendeeEmail").each( function(){
+		var attendeeEmail = $(this).attr('id');
+		var attendeeName = attendeeEmail.replace('Email', 'Name');			
+		var nameControl = "#" + attendeeName;			
+		if( $(this).val().trim() != "" ){				
+			$(nameControl).attr('required', true);
+			$(nameControl)[0].checkValidity();
+		} else {
+			$(nameControl).attr('required', false);
+		}			
+	});
+	
+	var theForm = $("#frmEventCreate");
+	// Show nice messages
+	$(theForm).addClass('was-validated');
+	
+	// All good ?
+	return $(theForm)[0].checkValidity();	
+}
+//JQuery functions -->
+$(document).ready( function(){
+	// handle button click event
+	$("#btnSaveEvent").click( function(){		
+		if( validateForm() ){
+			$(this).prop('disabled', true).html('Guardando Datos, espere...');
+			// Seems like everything has properly entered, process the form			
+			// use post to send data
+			$.post( baseUrl + '/reserva/guarda', $("#frmEventCreate").serialize(), 
+				function(data) {
+					if( data.status=="error" ){
+						$("#btnSaveEvent").prop('disabled', false).html('   RESERVAR SALA   ');
+						$("#divErrorMessage").html( data.message ).removeClass( 'd-none' );
+					} else {
+						$("#divErrorMessage").addClass( 'd-none' );
+						window.location = "/reserva/" + $("#inputDateSelected").val();
+					}
+				}
+			);
+		}
+	});
+});
+//-->
+</script>
+<form id="frmEventCreate" method="post" class="form needs-validation" style="padding:10px;" novalidate>
+<div class="form-group row">
+	<div class="col-md-2 text-right">
+		<label for="inputTitle">T&iacute;tulo:</label>
+		<input type="hidden" name="inputRoomId" value="<?php echo $this->room->getId(); ?>" >
+		<input type="hidden" name="inputCSRFToken" value="<?php echo $this->token; ?>" >
+		<input type="hidden" name="inputDateSelected" id="inputDateSelected" value="<?php echo $this->dateSelected; ?>" >		
+	</div>
+	<div class="col-md-10">					
+        <input type="text" class="form-control" name="inputTitle" id="inputTitle" maxlength="500" required>
+        <div class="invalid-feedback">Por favor escribe el t&iacute;tulo del evento</div>
+    </div>                        
+ </div><!-- ./ row -->
+ <div class="form-group row">
+	<div class="col-md-2 text-right">
+		<label for="inputDescription">Descripci&oacute;n del evento:</label>
+	</div>
+	<div class="col-md-10">
+        <textarea class="form-control" name="inputDescription" id="inputDescription" maxlength="1024" rows="4" required></textarea>
+        <div class="invalid-feedback">Por favor escribe una descripci&oacute;n del evento</div>
+    </div>
+ </div><!-- ./ row -->
+ <div class="form-group row">
+	<div class="col-md-2 text-right">
+		<label for="inputStartAt">Inicia:</label>		
+	</div>
+	<div class="col-md-4">		
+		<select class="form-control" name="inputStartAt" id="inputStartAt" required>
+			<option value="">-- Seleccione una opci&oacute;n --</option>
+<?php for( $i = $this->room->getOpenAt(); $i < $this->room->getCloseAt(); $i++ ) {?>
+			<option value="<?php echo $i;?>" <?php echo $i==$this->hourSelected ? "selected='selected'" : '';?> <?php echo $i < $this->hourSelected ? "disabled='disabled'" : '';?>><?php echo $i.":00";?></option>			
+<?php }?>
+		</select>		        
+        <div class="invalid-feedback">Debe ser menor a Termina</div>
+    </div>
+    <div class="col-md-2 text-right">
+		<label for="inputFinishAt">Termina:</label>
+	</div>
+	<div class="col-md-4">
+        <select class="form-control" name="inputFinishAt" id="inputFinishAt" required>
+			<option value="">-- Seleccione una opci&oacute;n --</option>
+<?php for( $i = $this->room->getOpenAt(); $i <= $this->room->getCloseAt(); $i++ ) {?>
+			<option value="<?php echo $i;?>" <?php echo $i==($this->hourSelected+1) ? "selected='selected'" : '';?> <?php echo $i <= $this->hourSelected ? "disabled='disabled'" : '';?>><?php echo $i.":00";?></option>        
+<?php }?>
+		</select>        
+        <div class="invalid-feedback">Debe ser mayor a Inicia</div>
+    </div>
+ </div><!-- ./ row -->
+ <div class="form-group row">
+	<div class="col-md-2 text-right">
+		<label for="inputAttendee">Asistentes:</label>
+	</div>
+	<div class="col-md-10">
+		<div class="row">
+			<label class="col-5 mx-auto">Nombre</label><label class="col-5 mx-auto">Correo</label>
+		</div>
+		<div class="row" style="margin-bottom:5px;">
+			<input type="text" class="form-control col-5 mx-auto" name="inputAttendeeName0" id="inputAttendeeName0" value="<?php echo $this->escapeHtml($this->organizer['name']); ?>" readonly>
+    		<input type="email" class="form-control col-5 mx-auto" name="inputAttendeeEmail0" id="inputAttendeeEmail0" value="<?php echo $this->escapeHtml($this->organizer['email']); ?>" readonly>
+		</div>
+<?php for( $i = 1; $i < $this->room->getCapacity(); $i++ ) {?>
+		<div class="row" style="margin-bottom:5px;">
+			<input type="text" class="form-control col-5 mx-auto" name="inputAttendeeName<?php echo $i;?>" id="inputAttendeeName<?php echo $i;?>" maxlength="120">
+    		<input type="email" class="form-control col-5 mx-auto" name="inputAttendeeEmail<?php echo $i;?>" id="inputAttendeeEmail<?php echo $i;?>" maxlength="255">
+    		<div class="invalid-feedback text-center">Por favor escriba el nombre y correo electr&oacute;nico del asistente</div>
+		</div>        
+<?php }?>		
+    </div>
+ </div><!-- ./ row -->
+ <div class="form-group row">
+ 	<div class="col-md-2"></div>	
+	<div class="col-md-10">
+        <button id="btnSaveEvent" type="button" class="btn btn-warning btn-lg">&nbsp;&nbsp;RESERVAR&nbsp;SALA&nbsp;&nbsp;</button>
+    </div>    
+ </div><!-- ./ row -->
+ <div class="form-group row">
+ 	<div class="col-md-12">
+		<div id="divErrorMessage" class="alert alert-danger d-none">Error message goes here</div>
+	</div>
+ </div><!-- ./ row -->
+ </form>
+ <?php }?>

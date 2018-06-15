@@ -1,0 +1,99 @@
+<script type="text/javascript">
+<!--
+// JavaScript functions -->
+var events = <?php echo json_encode($this->jsonEvents, JSON_PRETTY_PRINT);?>;
+//console.log(events[1][10].Description); // DEBUG only
+function getTitle(roomId, eventId){
+	var title = "";
+	if( events[roomId][eventId] != 'undefined' ){
+		title = events[roomId][eventId].title;
+	}
+	return title;	
+}
+function getEventDetails(id){	
+	$("#divModalEventDetails").load( baseUrl+"/evento/"+ id, function(){		
+		$("#myModalEventDetails").modal();
+	});
+}
+function createEventForm(eventDate, roomId, hour){	
+	var url = baseUrl + "/reserva/crea/" + eventDate + "/" + roomId + "/" + hour;
+	$("#divModalEventCreate").load(url, function(){		
+		$("#myModalEventCreate").modal();
+	});	
+}
+//-->
+</script>
+<div class="row" style="margin-top:15px; margin-bottom:15px;">
+	<div class="col-md-11 mx-auto">
+		<h4 class="text-center">
+			<a href="/reserva/<?php echo $this->prevWeek;?>"><span class="fa fa-chevron-left"></span><span class="fa fa-chevron-left"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/reserva/<?php echo $this->prevDate;?>"><span class="fa fa-chevron-left"></span></a>&nbsp;&nbsp;
+			<?php echo $this->currentDate;?>&nbsp;&nbsp;
+			<a href="/reserva/<?php echo $this->nextDate;?>"><span class="fa fa-chevron-right"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/reserva/<?php echo $this->nextWeek;?>"><span class="fa fa-chevron-right"></span><span class="fa fa-chevron-right"></span></a>
+		</h4>
+		<br/>
+		<div class="row">
+<?php foreach( $this->rooms as $room ) {?>		
+			<div class="col-md-3 mx-auto">
+				<div class="card bg-light mb-3">
+					<div class="card-header">
+						<?php echo $room->getName();?>
+						<div class="text-right"><i>Capacidad&nbsp;</i>
+    						<span class="badge badge-pill badge-primary"><?php echo $room->getCapacity();?></span><i>&nbsp;personas</i>
+    					</div>						
+					</div>
+					<ul class="list-group list-group-flush">
+<?php for( $i = $room->getOpenAt(); $i < $room->getCloseAt(); $i++ ) { $eventFinishAt = 0; ?>    				
+    					<li class="list-group-item">
+    						<div class="row">
+    						<span class="col text-left"><?php echo $i.":00";?></span>&nbsp;&nbsp;
+<?php if( isset($this->jsonEvents[$room->getId()][$i]) ) { $eventFinishAt = $this->jsonEvents[$room->getId()][$i]['FinishAt']; ?>
+							<span class="col col-9">
+    							<span><?php echo $this->jsonEvents[$room->getId()][$i]['Title'];?></span>
+    							<span class="fa fa-info-circle btn btn-default btn-sm pull-right" onclick="getEventDetails(<?php echo $this->jsonEvents[$room->getId()][$i]['EventId'];?>);"></span>
+    						</span>
+<?php while( $eventFinishAt > ($i+1) ) { ?>							
+    						<span class="col-9 text-left"><?php echo ($i+1).":00";?></span>
+<?php $i++; }?>    						
+<?php } elseif( $i > $this->currentHour ) { ?>
+    						<span class="fa fa-calendar-times-o btn btn-success btn-sm pull-right" onclick="createEventForm('<?php echo $this->currentDate;?>','<?php echo $room->getId();?>', '<?php echo $i; ?>');" alt="Reservar" title="Reservar"></span>    						
+<?php }?>    						    					
+    						</div>
+    					</li>    					
+<?php }?>					
+					</ul>
+				</div><!-- ./ card -->
+			</div><!-- ./ col-md-3 -->
+<?php }?>
+		</div><!-- ./ rooms -->	
+	</div><!-- ./ col-md-11 -->	
+</div>
+<!-- Modal window for event details -->
+<div class="modal fade" id="myModalEventDetails" tabindex="-1" role="dialog" aria-labelledby="myModalEventDetailsLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    	<div class="modal-body">
+    		<div id="divModalEventDetails"></div><!-- event details wrapper -->
+    	</div>
+    	<div class="modal-footer">
+    		<button type="button" class="btn btn-primary" data-dismiss="modal">&nbsp;&nbsp;Cerrar&nbsp;&nbsp;</button>
+    	</div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for event create-->
+<div class="modal fade" id="myModalEventCreate" tabindex="-1" role="dialog" aria-labelledby="myModalEventCreateLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    	<div class="modal-body">
+    		<div id="divModalEventCreate">
+    			
+    		</div><!-- event create wrapper -->
+    	</div>
+    	<div class="modal-footer">
+    		<button type="button" class="btn btn-primary" data-dismiss="modal">&nbsp;&nbsp;Cerrar&nbsp;&nbsp;</button>
+    	</div>
+    </div>
+  </div>
+</div>

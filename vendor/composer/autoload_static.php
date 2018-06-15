@@ -63,6 +63,10 @@ class ComposerStaticInit140bf3da61e78a80c19f1aced90f0f3f
         array (
             'User\\' => 5,
         ),
+        'R' => 
+        array (
+            'Reservation\\' => 12,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -234,6 +238,10 @@ class ComposerStaticInit140bf3da61e78a80c19f1aced90f0f3f
         'User\\' => 
         array (
             0 => __DIR__ . '/../..' . '/module/User/src',
+        ),
+        'Reservation\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/module/Reservation/src',
         ),
         'Psr\\Log\\' => 
         array (

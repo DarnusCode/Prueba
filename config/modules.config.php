@@ -25,8 +25,9 @@ return [
     'Zend\InputFilter',
     'Zend\Filter',
     'Zend\Hydrator',
-    'Application',
-    'User'
+    'Application',    
+    'User',
+    'Reservation'
 ];
 
 /**

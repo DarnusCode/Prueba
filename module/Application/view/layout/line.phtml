@@ -28,7 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         
         <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         
         <script type="text/javascript">
             $(document).ready(function () {
@@ -39,6 +39,9 @@
                     }
                 });
             });
+        </script>
+        <script type="text/javascript">
+        	var baseUrl = '<?php echo $this->basePath();?>';
         </script>
         
     </head>
@@ -64,10 +67,12 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#">Comunidades</a>
 					</li>
+<?php if( !empty($this->userName) ){?>					
 					<li class="nav-item separator"></li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Reservaci&oacute;n de salas</a>
+						<a class="nav-link" href="<?= $this->url('reserva') ?>">Reservaci&oacute;n de salas</a>
 					</li>
+<?php }?>					
 					<li class="nav-item separator"></li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Semilleros</a>

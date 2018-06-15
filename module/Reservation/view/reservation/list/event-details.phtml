@@ -1,0 +1,37 @@
+<?php if( $this->event == null) { ?>
+<div class="card">
+	<div class="card-header text-center">
+		<h5>Contenido bloqueado, debe ser llamado desde la p&aacutegina de reservaciones;</h5>
+	</div>
+</div>
+<?php } else { ?>
+<div class="card">
+<div class="card-header text-center"><h5><?php echo $this->escapeHtml($this->event->getTitle());?></h5></div>
+<div class="card-body">
+	<p><?php echo nl2br( $this->escapeHtml($this->event->getDescription()) );?></p>
+	<div class="row">
+		<div class="col-5 mx-auto">
+			<div class="card bg-light mb-3">
+            	<div class="card-header">Asistentes</div>	
+                <ul class="list-group list-group-flush">                	
+                <?php foreach( $this->attendees as $attendee ) {?>	
+                	<li class="list-group-item"><?php echo $attendee->getName()." ".$attendee->getEmail();?></li>    	
+                <?php }?>	
+                </ul>
+            </div><!-- ./ attendees list -->
+		</div><!-- ./ col-5 -->
+		<div class="col-5 mx-auto">
+			<div class="card bg-light mb-3">
+            	<div class="card-header">Sala</div>
+            	<ul class="list-group list-group-flush">
+            		<li class="list-group-item"><?php echo $this->room->getName();?></li>
+            		<li class="list-group-item">Inicia <?php echo date('d-m-Y H:i:s', $this->event->getStartAt() );?></li>
+            		<li class="list-group-item">Termina <?php echo date('d-m-Y H:i:s', $this->event->getFinishAt() );?></li>
+            	</ul>
+            </div><!-- ./ room details -->
+		</div><!-- ./ col-5 -->
+	</div><!-- ./ row -->		
+</div><!-- ./ body -->
+<div class="card-footer card-text text-right"><i>Evento creado por: <?php echo $this->escapeHtml($this->organizer->getUserName() ." ".$this->organizer->getEmail());?></i></div>
+</div><!-- ./ main card -->
+<?php }?>

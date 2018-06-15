@@ -67,17 +67,17 @@ class Module
      * @return boolean True when it's a public section
      */
     private function _isPublicPage($uri)
-    {
+    {        
         // Add dummy base path, otherwise it will cycle the application
         $uri = 'base'.trim($uri);
         if( $uri=='base/' ) return true;
         
-        $publics = [ '/login', '/logout', '/reset-password', '/set-vcode', '/user/validate-code', '/user/save-pwd',
-            '/', '/home', '/about'
+        $publics = [ '/login', '/logout', '/reset-password', '/set-vcode', '/user/validate-code', '/user/save-pwd', 
+            '/home', '/about', '/registro',
         ];
         foreach ($publics as $public)
         {
-            $position = strpos( trim($uri), $public);
+            $position = strpos( trim($uri), $public);            
             if ( $position  > 0 ){
                 return true;
             }
